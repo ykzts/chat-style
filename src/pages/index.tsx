@@ -1,29 +1,24 @@
-import Grid from '@material-ui/core/Grid'
-import React, { FC } from 'react'
-import Preview from 'components/organisms/Preview'
-import Result from 'components/organisms/Result'
-import StylesForm from 'components/organisms/StylesForm'
-import { ChatStylesProvider } from 'context/ChatStylesContext'
-import { PreviewProvider } from 'context/PreviewContext'
+import Layout from '../components/layout'
+import Preview from '../components/preview'
+import Result from '../components/result'
+import StylesForm from '../components/styles-form'
+import type { NextPage } from 'next'
 
-const Generator: FC = () => {
+const Generator: NextPage = () => {
   return (
-    <ChatStylesProvider>
-      <PreviewProvider>
-        <Grid container>
-          <Grid item sm={6} xs={12}>
-            <StylesForm />
-          </Grid>
-          <Grid item sm={6} xs={12}>
-            <Preview />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Result />
-          </Grid>
-        </Grid>
-      </PreviewProvider>
-    </ChatStylesProvider>
+    <Layout>
+      <div className="container flex items-start mx-auto relative">
+        <div className="px-4 sm:w-full w-6/12">
+          <StylesForm />
+        </div>
+        <div className="px-4 sm:w-full sticky top-0 w-6/12">
+          <Preview />
+        </div>
+      </div>
+      <div className="container mx-auto px-4">
+        <Result />
+      </div>
+    </Layout>
   )
 }
 

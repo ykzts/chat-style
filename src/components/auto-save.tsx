@@ -1,7 +1,8 @@
 import { useFormikContext } from 'formik'
-import React, { FC, useEffect } from 'react'
+import { useEffect } from 'react'
+import type { VFC } from 'react'
 
-const AutoSave: FC = () => {
+const AutoSave: VFC = () => {
   const { submitForm } = useFormikContext()
 
   useEffect(() => {
@@ -9,10 +10,12 @@ const AutoSave: FC = () => {
       void submitForm()
     }, 500)
 
-    return (): void => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+    }
   }, [submitForm])
 
-  return <></>
+  return null
 }
 
 export default AutoSave

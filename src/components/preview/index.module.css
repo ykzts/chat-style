@@ -1,0 +1,27 @@
+.preview {
+  background-image: linear-gradient(
+      45deg,
+      #eee 25%,
+      transparent 25%,
+      transparent 75%,
+      #eee 75%,
+      #eee 100%
+    ),
+    linear-gradient(45deg, #eee 25%, #fff 25%, #fff 75%, #eee 75%, #eee 100%);
+  background-position: 0 0, 15px 15px;
+  background-repeat: repeat;
+  background-size: 30px 30px;
+  min-height: 500px;
+}
+
+.previewInvert {
+  background-image: linear-gradient(
+      45deg,
+      #333 25%,
+      transparent 25%,
+      transparent 75%,
+      #333 75%,
+      #333 100%
+    ),
+    linear-gradient(45deg, #333 25%, #444 25%, #444 75%, #333 75%, #333 100%);
+}

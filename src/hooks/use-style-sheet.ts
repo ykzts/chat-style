@@ -1,4 +1,6 @@
-import ChatStyles, { ChatOutlineStyle } from 'types/ChatStyles'
+import { useMemo } from 'react'
+import useChatStyles from './use-chat-styles'
+import type { ChatOutlineStyle, ChatStyles } from './use-chat-styles'
 
 export const generateTextShadow = (outlineStyle: ChatOutlineStyle): string => {
   if (outlineStyle.width < 1) return 'none'
@@ -372,3 +374,12 @@ yt-live-chat-restricted-participation-renderer {
   display: none !important;
 }
 `
+
+function useStyleSheet(): string {
+  const [chatStyles] = useChatStyles()
+  const styleSheet = useMemo(() => generateStyleSheet(chatStyles), [chatStyles])
+
+  return styleSheet
+}
+
+export default useStyleSheet

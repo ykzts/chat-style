@@ -10,7 +10,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    // 'plugin:import/recommended',
+    'plugin:import/recommended',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended'
   ],
@@ -22,8 +22,8 @@ module.exports = {
       },
       extends: [
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking'
-        // 'plugin:import/typescript'
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:import/typescript'
       ],
       files: ['*.ts', '*.tsx'],
       parser: '@typescript-eslint/parser',
@@ -40,7 +40,7 @@ module.exports = {
       ],
       files: ['*.jsx', '*.tsx'],
       rules: {
-        // 'react/jsx-sort-props': 'error'
+        'react/jsx-sort-props': 'error'
       },
       settings: {
         react: {
@@ -61,21 +61,31 @@ module.exports = {
   },
   root: true,
   rules: {
-    // 'import/order': [
-    //  'error',
-    //  {
-    //  alphabetize: {
-    //   order: 'asc'
-    //  },
-    //  groups: [
-    //     ['builtin', 'external'],
-    //      'internal',
-    //      'parent',
-    //      'sibling',
-    //      'index'
-    //    ]
-    //   }
-    // ],
-    // 'sort-keys': 'error'
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        bundledDependencies: false,
+        devDependencies: ['next.config.js', 'tailwind.config.js'],
+        optionalDependencies: false,
+        peerDependencies: false
+      }
+    ],
+    'import/order': [
+      'error',
+      {
+        alphabetize: {
+          order: 'asc'
+        },
+        groups: [
+          ['builtin', 'external'],
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          'type'
+        ]
+      }
+    ],
+    'sort-keys': 'error'
   }
 }

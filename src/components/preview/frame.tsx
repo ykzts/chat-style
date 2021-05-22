@@ -1,41 +1,18 @@
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import createStyles from '@material-ui/styles/createStyles'
-import React, {
-  FunctionComponent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
-import ChatStyles from 'types/ChatStyles'
-import { generateStyleSheet } from 'utils/styleSheet'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useStyleSheet } from '../../hooks'
+import type { VFC } from 'react'
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      border: 0,
-      display: 'block',
-      height: 0,
-      width: '100%'
-    }
-  })
-)
-
-type Props = {
-  chatStyles: ChatStyles
+type Message = {
+  frameHeight: number
 }
 
-const PreviewFrame: FunctionComponent<Props> = ({
-  chatStyles
-}): ReactElement => {
+const PreviewFrame: VFC = () => {
   const frameRef = useRef<HTMLIFrameElement>(null)
   const [frameHeight, setFrameHeight] = useState<number>(0)
-  const classes = useStyles()
+  const [styleSheet] = useStyleSheet()
 
   const handleLoadStyleSheet = useCallback(
-    (event: MessageEvent): void => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    (event: MessageEvent<Message>): void => {
       setFrameHeight(event.data.frameHeight)
     },
     [setFrameHeight]
@@ -44,8 +21,9 @@ const PreviewFrame: FunctionComponent<Props> = ({
   useEffect(() => {
     window.addEventListener('message', handleLoadStyleSheet)
 
-    return (): void =>
+    return () => {
       window.removeEventListener('message', handleLoadStyleSheet)
+    }
   }, [handleLoadStyleSheet])
 
   useEffect(() => {
@@ -53,7 +31,6 @@ const PreviewFrame: FunctionComponent<Props> = ({
 
     if (!win) return
 
-    const styleSheet = generateStyleSheet(chatStyles)
     const styleSheetURL = URL.createObjectURL(
       new Blob([styleSheet], { type: 'text/css' })
     )
@@ -65,11 +42,11 @@ const PreviewFrame: FunctionComponent<Props> = ({
         win.postMessage({ url: styleSheetURL }, win.origin)
       )
     }
-  }, [frameHeight, chatStyles])
+  }, [frameHeight, styleSheet])
 
   return (
     <iframe
-      className={classes.root}
+      className="block border-0 h-0 w-full"
       ref={frameRef}
       src="/preview/preview.html"
       style={{ height: `${frameHeight}px` }}
